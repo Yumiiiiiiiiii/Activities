@@ -1,10 +1,10 @@
 const presence = new Presence({
   clientId: '1324486726902616117',
 })
-const browsingTimestamp = Math.floor(Date.now() / 1000) // Show elapsed time
+const browsingTimestamp = Math.floor(Date.now() / 1000) 
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/Ia9Xgge.png', // Direct URL to the logo image
+  Logo = 'https://i.imgur.com/Ia9Xgge.png', 
 }
 
 const slideshow = presence.createSlideshow()
@@ -15,9 +15,9 @@ presence.on('UpdateData', async () => {
 
   // Create the base presence data
   const presenceData: PresenceData = {
-    largeImageKey: ActivityAssets.Logo, // Direct URL to the logo image
+    largeImageKey: ActivityAssets.Logo,
     details: 'Boothを閲覧中',
-    startTimestamp: browsingTimestamp, // Show elapsed time
+    startTimestamp: browsingTimestamp,
   }
 
   // 検索したときの処理
