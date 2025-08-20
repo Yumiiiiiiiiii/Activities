@@ -1,10 +1,10 @@
 const presence = new Presence({
   clientId: '1324486726902616117',
 })
-const browsingTimestamp = Math.floor(Date.now() / 1000) 
+const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/Ia9Xgge.png', 
+  Logo = 'https://i.imgur.com/Ia9Xgge.png',
 }
 
 const slideshow = presence.createSlideshow()
