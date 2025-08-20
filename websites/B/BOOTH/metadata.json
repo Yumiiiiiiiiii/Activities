@@ -7,8 +7,8 @@
   },
   "service": "BOOTH",
   "description": {
-    "en": "TODO",
-    "ja": "試し"
+    "en": "Share the products you are looking at on BOOTH",
+    "ja": "BOOTHで見ている商品を共有します"
   },
   "url": "booth.pm",
   "regExp": "([a-z0-9-]+[.])*booth[.]pm[/]",
