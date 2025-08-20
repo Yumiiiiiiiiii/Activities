@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "881563425707282463",
+    "name": "nak_ymi"
+  },
+  "service": "BOOTH",
+  "description": {
+    "en": "TODO",
+    "ja": "試し"
+  },
+  "url": "booth.pm",
+  "regExp": "([a-z0-9-]+[.])*booth[.]pm[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/Ia9Xgge.png",
+  "thumbnail": "https://i.imgur.com/0JPC0Lh.png",
+  "color": "#FC4D50",
+  "category": "socials",
+  "tags": [
+    "shop"
+  ]
+}
