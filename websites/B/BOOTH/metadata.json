@@ -8,7 +8,7 @@
   "service": "BOOTH",
   "description": {
     "en": "BOOTH is a comprehensive creative market in collaboration with pixiv. You can easily create a shop for free, and we also provide product storage and shipping agency services!",
-    "ja": "BOOTHで見ている商品を共有します"
+    "ja": "BOOTH（ブース）とは、pixivと連携した、創作物の総合マーケットです。無料で簡単にショップを作成でき、商品の保管・発送代行サービスも提供しています！"
   },
   "url": "booth.pm",
   "regExp": "([a-z0-9-]+[.])*booth[.]pm[/]",
