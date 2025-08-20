@@ -7,7 +7,7 @@
   },
   "service": "BOOTH",
   "description": {
-    "en": "Share the products you are looking at on BOOTH",
+    "en": "I'll share the BOOTH products you're looking at on Discord.",
     "ja": "BOOTHで見ている商品を共有します"
   },
   "url": "booth.pm",
