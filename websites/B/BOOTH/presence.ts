@@ -1,5 +1,5 @@
 const presence = new Presence({
-  clientId: '1324486726902616117', // You must enter this yourself
+  clientId: '1324486726902616117',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000) // Show elapsed time
 
