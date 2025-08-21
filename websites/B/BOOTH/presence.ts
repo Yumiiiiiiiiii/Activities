@@ -18,19 +18,21 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
   }
 
-  if (hostname != 'booth.pm' && !pathname.includes('/items/')) {
+  if (hostname !== 'booth.pm' && !pathname.includes('/items/')) {
     const maker = document.querySelector<HTMLAnchorElement>(`[class="nav"]`)
     const shimgcls = document.querySelector<HTMLDivElement>(`[class="avatar-image"]`)
-    const match = shimgcls?.style.backgroundImage.match(/url\("([^"]+)"\)/);
+    const match = shimgcls?.style.backgroundImage.match(/url\("([^"]+)"\)/)
 
     if (maker !== null) {
       presenceData.buttons = [
         {
           label: 'ショップページを表示',
-          url: maker.href
-        }
+          url: maker.href,
+        },
       ]
+
       presenceData.details = `${maker.textContent}のショップを閲覧中`
+
       if (match && match[1]) {
         presenceData.largeImageKey = match[1]
       }
