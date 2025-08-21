@@ -10,10 +10,8 @@ enum ActivityAssets {
 const slideshow = presence.createSlideshow()
 
 presence.on('UpdateData', async () => {
-  // Get the current URL
   const { pathname, href, hostname } = document.location
 
-  // Create the base presence data
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     details: 'Boothを閲覧中',
@@ -39,8 +37,6 @@ presence.on('UpdateData', async () => {
     }
     presence.setActivity(presenceData)
   }
-
-  // Set the presence name based on the current page
   // 検索したときの処理
   else if (pathname.includes('/search/')) {
     // 検索したワードを取得する
