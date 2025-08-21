@@ -11,7 +11,7 @@ const slideshow = presence.createSlideshow()
 
 presence.on('UpdateData', async () => {
   // Get the current URL
-  const { pathname, href } = document.location
+  const { pathname, href, hostname } = document.location
 
   // Create the base presence data
   const presenceData: PresenceData = {
@@ -20,8 +20,29 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
   }
 
+  if (hostname != 'booth.pm' && !pathname.includes('/items/')) {
+    const maker = document.querySelector<HTMLAnchorElement>(`[class="nav"]`)
+    const shimgcls = document.querySelector<HTMLDivElement>(`[class="avatar-image"]`)
+    const match = shimgcls?.style.backgroundImage.match(/url\("([^"]+)"\)/);
+
+    if (maker !== null) {
+      presenceData.buttons = [
+        {
+          label: 'ショップページを表示',
+          url: maker.href
+        }
+      ]
+      presenceData.details = `${maker.textContent}のショップを閲覧中`
+      if (match && match[1]) {
+        presenceData.largeImageKey = match[1]
+      }
+    }
+    presence.setActivity(presenceData)
+  }
+
+  // Set the presence name based on the current page
   // 検索したときの処理
-  if (pathname.includes('/search/')) {
+  else if (pathname.includes('/search/')) {
     // 検索したワードを取得する
     const search = document.querySelector<HTMLInputElement>('#js-item-search-box > div > form > div > input')
     const tags = document.querySelector<HTMLDivElement>(`[class="text-text-default inline-block"]`)
@@ -47,13 +68,12 @@ presence.on('UpdateData', async () => {
     let num = 0
     // 商品の名前と画像を取得
     const item = document.querySelector<HTMLImageElement>('img.market-item-detail-item-image')
-    const maker = document.querySelector<HTMLAnchorElement>(`[data-product-list="from market_show via market_item_detail to shop_index"]`)
-    const imgmkr = document.querySelector<HTMLImageElement>(`[class="h-[24px] rounded-oval w-[24px]"]`)
+    const maker = document.querySelector<HTMLAnchorElement>(`[class="grid grid-cols-[auto_1fr_min-content] gap-4 items-center no-underline w-fit !text-current"]`)
     document.querySelectorAll<HTMLDivElement>('div.slick-thumbnail-border').forEach((items) => {
-      if (items.querySelector<HTMLImageElement>('img')?.src != null) {
+      if (maker != null) {
         slideshow.addSlide(`items${num}`, {
 
-          details: `${maker?.textContent || '不明'}`,
+          details: `${maker.querySelector<HTMLImageElement>(`img`)?.alt || '不明'}`,
           largeImageKey: items.querySelector<HTMLImageElement>('img')?.src,
           startTimestamp: browsingTimestamp,
         }, 500)
@@ -65,7 +85,7 @@ presence.on('UpdateData', async () => {
     const slides = slideshow.getSlides()
     for (const slide of slides) {
       const data = slide.data
-      data.smallImageKey = imgmkr?.src
+      data.smallImageKey = maker?.querySelector<HTMLImageElement>(`img`)?.src
       data.buttons = [
         {
           label: '商品ページを表示',
