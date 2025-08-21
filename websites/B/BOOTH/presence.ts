@@ -33,9 +33,8 @@ presence.on('UpdateData', async () => {
 
       presenceData.details = `${maker.textContent}のショップを閲覧中`
 
-      if (match && match[1]) {
+      if (match && match[1])
         presenceData.largeImageKey = match[1]
-      }
     }
     presence.setActivity(presenceData)
   }
