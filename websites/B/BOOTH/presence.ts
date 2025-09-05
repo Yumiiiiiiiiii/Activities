@@ -17,6 +17,7 @@ presence.on('UpdateData', async () => {
     details: 'Boothを閲覧中',
     startTimestamp: browsingTimestamp,
   }
+  const hideat = await presence.getSetting<boolean>('hideAdult')
 
   if (hostname !== 'booth.pm' && !pathname.includes('/items/')) {
     const maker = document.querySelector<HTMLAnchorElement>(`[class="nav"]`)
@@ -64,38 +65,47 @@ presence.on('UpdateData', async () => {
     // idを別で分けるために作った変数
     let num = 0
     // 商品の名前と画像を取得
+    const adult = document.querySelector<HTMLDivElement>(`[class="empty:hidden flex gap-4 items-center"]`)
     const item = document.querySelector<HTMLImageElement>('img.market-item-detail-item-image')
     const maker = document.querySelector<HTMLAnchorElement>(`[class="grid grid-cols-[auto_1fr_min-content] gap-4 items-center no-underline w-fit !text-current"]`)
-    document.querySelectorAll<HTMLDivElement>('div.slick-thumbnail-border').forEach((items) => {
-      if (maker != null) {
-        slideshow.addSlide(`items${num}`, {
+    if (!(adult?.textContent?.includes('R-18') && hideat)) {
+      document.querySelectorAll<HTMLDivElement>('div.slick-thumbnail-border').forEach((items) => {
+        if (maker != null) {
+          slideshow.addSlide(`items${num}`, {
+            details: `${maker.querySelector<HTMLImageElement>(`img`)?.alt || undefined}`,
+            largeImageKey: items.querySelector<HTMLImageElement>('img')?.src,
+            largeImageUrl: href,
+            startTimestamp: browsingTimestamp,
+          }, 500)
+          num++
+        }
+      })
+      // 取得して登録した画像や商品名をスライドショーで表示※ついでにボタンの処理も
+      presence.setActivity(slideshow)
+      const slides = slideshow.getSlides()
+      for (const slide of slides) {
+        const data = slide.data
+        data.smallImageKey = maker?.querySelector<HTMLImageElement>(`img`)?.src
+        data.largeImageText = maker?.querySelector<HTMLImageElement>(`img`)?.alt || undefined
+        data.smallImageUrl = maker?.href || undefined
+        data.buttons = [
+          {
+            label: '商品ページを表示',
+            url: href,
 
-          details: `${maker.querySelector<HTMLImageElement>(`img`)?.alt || '不明'}`,
-          largeImageKey: items.querySelector<HTMLImageElement>('img')?.src,
-          startTimestamp: browsingTimestamp,
-        }, 500)
-        num++
+          },
+          {
+            label: `ショップページを表示`,
+            url: maker?.href || 'https://booth.pm',
+          },
+        ]
+        data.name = `${item?.alt || '不明'}`
+        slide.updateData(data)
       }
-    })
-    // 取得して登録した画像や商品名をスライドショーで表示※ついでにボタンの処理も
-    presence.setActivity(slideshow)
-    const slides = slideshow.getSlides()
-    for (const slide of slides) {
-      const data = slide.data
-      data.smallImageKey = maker?.querySelector<HTMLImageElement>(`img`)?.src
-      data.buttons = [
-        {
-          label: '商品ページを表示',
-          url: href,
-
-        },
-        {
-          label: `ショップページを表示`,
-          url: maker?.href || 'https://booth.pm',
-        },
-      ]
-      data.name = `${item?.alt || '不明'}`
-      slide.updateData(data)
+    }
+    else {
+      presenceData.details = '商品閲覧中'
+      presence.setActivity(presenceData)
     }
   }
   else if (pathname.includes('/items')) {

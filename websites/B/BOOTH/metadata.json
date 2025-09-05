@@ -19,5 +19,17 @@
   "category": "socials",
   "tags": [
     "shop"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "hideAdult",
+      "title": "Hide Adult",
+      "description": "Hide adult content in status",
+      "value": true
+    }
   ]
 }
