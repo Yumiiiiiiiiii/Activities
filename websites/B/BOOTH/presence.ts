@@ -7,6 +7,8 @@ enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/B/BOOTH/assets/logo.png',
 }
 
+const Adults = ['R-18', 'Adult']
+
 const slideshow = presence.createSlideshow()
 
 presence.on('UpdateData', async () => {
@@ -65,10 +67,11 @@ presence.on('UpdateData', async () => {
     // idを別で分けるために作った変数
     let num = 0
     // 商品の名前と画像を取得
-    const adult = document.querySelector<HTMLDivElement>(`[class="empty:hidden flex gap-4 items-center"]`)
+    const tags = document.querySelector<HTMLDivElement>(`[class="empty:hidden flex gap-4 items-center"]`)?.textContent || ''
+    const adult = Adults.includes(tags)
     const item = document.querySelector<HTMLImageElement>('img.market-item-detail-item-image')
     const maker = document.querySelector<HTMLAnchorElement>(`[class="grid grid-cols-[auto_1fr_min-content] gap-4 items-center no-underline w-fit !text-current"]`)
-    if (!(adult?.textContent?.includes('R-18') && hideat)) {
+    if (!(adult && hideat)) {
       document.querySelectorAll<HTMLDivElement>('div.slick-thumbnail-border').forEach((items) => {
         if (maker != null) {
           slideshow.addSlide(`items${num}`, {
